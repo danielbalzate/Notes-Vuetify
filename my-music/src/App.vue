@@ -1,25 +1,72 @@
 <template>
 	<div id="app">
-		<header>
+		<header class="text-center">
 			<h1>My music</h1>
 		</header>
 		<main>
 			<section class="player">
-				<h2 class="song-title">
-					{{ current.title }}
-					<span>{{ current.artist }}</span>
-				</h2>
-				<div class="controls">
-					<button class="prev" @click="prev">Prev</button>
-					<button class="play" v-if="!isPlaying" @click="play">Play</button>
-					<button class="pause" v-else @click="pause">Pause</button>
-					<button class="next" @click="next">Next</button>
-				</div>
+				<v-card shaped class="mx-auto" max-width="344" outlined style="background-image: linear-gradient(to right, rgb(197, 119, 230), rgb(255, 88, 88));">
+					<v-list-item two-line>
+						<v-list-item-content>
+							<div class="overline mb-4 song-title">{{ current.title }}</div>
+							<v-list-item-title class="headline mb-1 song-title">{{ current.artist }}</v-list-item-title>
+						</v-list-item-content>
+						<v-img width="70" class="img" :src="current.img" :alt="current.img" style="margin-top:5%"></v-img>
+					</v-list-item>
+
+					<div class="controls">
+						<v-btn class="mx-2 prev" fab dark x-small color="blue" @click="prev">
+							<v-icon dark>mdi-skip-previous</v-icon>
+						</v-btn>
+						<v-btn class="mx-2 play" v-if="!isPlaying" fab dark small color="blue" @click="play">
+							<v-icon dark>mdi-play</v-icon>
+						</v-btn>
+						<v-btn class="mx-2 pause" v-else fab dark small color="blue" @click="pause">
+							<v-icon dark>mdi-pause</v-icon>
+						</v-btn>
+						<v-btn class="mx-2 next" fab dark x-small color="blue" @click="next">
+							<v-icon dark>mdi-skip-next</v-icon>
+						</v-btn>
+					</div>
+				</v-card>
 			</section>
 			<section class="playlist">
-				<h3>The Playlist</h3>
-				<button v-for="song in songs" :key="song.src" @click="play(song)" :class="song.src == current.src ? 'song playing' : 'song'">{{ song.title }} - {{ song.artist }}</button>
+				<!-- <v-bottom-navigation
+					:value="activeBtn"
+					color="deep-purple"
+					horizontal
+					
+				>
+					<v-btn @click="play(song)" class="d-flex flex-row mb-6">
+						<span>{{ song.title }} - {{ song.artist }}</span>
+					</v-btn>
+					<v-btn v-if="song.src == current.src" @click="play(song)">
+						<v-icon>mdi-alien</v-icon>
+					</v-btn>
+					<v-btn v-if="song.src == current.src" @click="pause(song)">
+						<v-icon>mdi-emoticon-sad-outline</v-icon>
+					</v-btn>
+				</v-bottom-navigation> -->
+				<v-card
+					shaped
+					class="mx-auto"
+					max-width="344"
+					v-for="song in songs"
+					:key="song.src"
+					@click="play(song)"
+					:class="song.src == current.src ? 'song playing' : 'song'"
+					style="margin-top:3%"
+				>
+					<v-card-text>{{ song.title }} - {{ song.artist }}</v-card-text>
+				</v-card>
 			</section>
+
+			<!-- <v-footer absolute class="font-weight-medium" style="background-color: #379ACC ">
+				<v-col class="text-center" cols="12">
+					{{ new Date().getFullYear() }} —
+					<strong>Desarrollado por Daniel B. Alzate</strong>
+				</v-col>
+			</v-footer> -->
 		</main>
 	</div>
 </template>
@@ -32,21 +79,50 @@ export default {
 			current: {},
 			index: 0,
 			isPlaying: false,
+			activeBtn: 1,
+			icons: ["mdi-facebook", "mdi-twitter", "mdi-instagram"],
 			songs: [
 				{
 					title: "Lady",
 					artist: "Modjo",
-					src: require("./assets/lady-modjo.mp3")
+					src: require("./assets/songs/lady-modjo.mp3"),
+					img: require("./assets/img/lady-modjo.jpg")
 				},
 				{
 					title: "Path",
 					artist: "Damian Marley",
-					src: require("./assets/path.mp3")
+					src: require("./assets/songs/path.mp3"),
+					img: require("./assets/img/damian-marley.jpg")
 				},
 				{
 					title: "Still Searching",
 					artist: "Damian Marley",
-					src: require("./assets/still.mp3")
+					src: require("./assets/songs/still.mp3"),
+					img: require("./assets/img/damian-marley.png")
+				},
+				{
+					title: "Shaggy",
+					artist: "Repent",
+					src: require("./assets/songs/shaggy-repent.mp3"),
+					img: require("./assets/img/repent.jpg")
+				},
+				{
+					title: "Tanya Stephens",
+					artist: "It's a pity",
+					src: require("./assets/songs/its-a-pity.mp3"),
+					img: require("./assets/img/its-a-pity.jpg")
+				},
+				{
+					title: "Fugees",
+					artist: "Fu-Gee-La",
+					src: require("./assets/songs/fu-gee-la.mp3"),
+					img: require("./assets/img/fu-gee-la.jpg")
+				},
+				{
+					title: "Buju Banton",
+					artist: "Champion",
+					src: require("./assets/songs/champion.mp3"),
+					img: require("./assets/img/champion.jpg")
 				}
 			],
 			player: new Audio()
@@ -111,7 +187,8 @@ header {
 	justify-content: center;
 	align-items: center;
 	padding: 15px;
-	background-color: red;
+	background-image: linear-gradient(to right, #cc2e5d, #ff5858);
+
 	color: azure;
 }
 main {
@@ -123,10 +200,9 @@ main {
 
 .song-title {
 	color: #212121;
-	font-size: 32px;
+	font-size: 15px;
 	font-weight: 700;
 	text-transform: uppercase;
-	text-align: center;
 }
 .song-title span {
 	font-weight: 400;
@@ -136,7 +212,7 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 30px 15px;
+	padding: 15px 5px;
 }
 button {
 	appearance: none;
@@ -156,17 +232,12 @@ button:hover {
 	margin: 0px 15px;
 	border-radius: 8px;
 	color: azure;
-	background-color: red;
+	background: linear-gradient(160deg, rgba(15, 226, 195, 1) 2%, rgba(215, 0, 160, 1) 100%);
 }
 .next,
 .prev {
-	font-size: 16px;
-	font-weight: 700;
-	padding: 10px 20px;
-	margin: 0px 15px;
-	border-radius: 6px;
 	color: azure;
-	background-color: red;
+	background: linear-gradient(160deg, rgba(15, 226, 195, 1) 2%, rgba(215, 0, 160, 1) 100%);
 }
 .playlist {
 	padding: 0px 30px;
@@ -185,6 +256,7 @@ button:hover {
 	font-size: 20px;
 	font-weight: 700;
 	cursor: pointer;
+	border-radius: 10px;
 }
 .playlist .song:hover {
 	color: red;
@@ -193,5 +265,11 @@ button:hover {
 .playlist .song.playing {
 	color: azure;
 	background-image: linear-gradient(to right, #cc2e5d, #ff5858);
+}
+.img {
+	box-sizing: border-box;
+	display: block;
+	object-fit: cover;
+	border-radius: 20px;
 }
 </style>

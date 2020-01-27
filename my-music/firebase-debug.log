@@ -1,0 +1,30 @@
+[debug] [2020-01-27T00:13:05.852Z] ----------------------------------------------------------------------
+[debug] [2020-01-27T00:13:05.853Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2020-01-27T00:13:05.854Z] CLI Version:   7.12.1
+[debug] [2020-01-27T00:13:05.854Z] Platform:      linux
+[debug] [2020-01-27T00:13:05.854Z] Node Version:  v12.13.1
+[debug] [2020-01-27T00:13:05.854Z] Time:          Sun Jan 26 2020 19:13:05 GMT-0500 (Colombia Standard Time)
+[debug] [2020-01-27T00:13:05.854Z] ----------------------------------------------------------------------
+[debug] [2020-01-27T00:13:05.854Z] 
+[debug] [2020-01-27T00:13:05.860Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-01-27T00:13:05.860Z] > authorizing via signed-in user
+[debug] [2020-01-27T00:13:05.860Z] [iam] checking project mymusic-pro for permissions ["firebase.projects.get"]
+[debug] [2020-01-27T00:13:05.861Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-01-27T00:13:05.862Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-01-27T00:13:06.169Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-27T00:13:06.178Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/mymusic-pro:testIamPermissions  
+
+[debug] [2020-01-27T00:13:06.883Z] <<< HTTP RESPONSE 200
+[debug] [2020-01-27T00:13:06.885Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/mymusic-pro  
+ 
+[debug] [2020-01-27T00:13:07.328Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/dani/Documents/my-vuetify/my-music'...
+[info] 
+[debug] [2020-01-27T00:13:07.333Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/mymusic-pro/webApps/-/config  
+ 
+[debug] [2020-01-27T00:13:07.739Z] <<< HTTP RESPONSE 200
+[warn] ⚠  hosting: Port 5000 is not available. Trying another port...
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5005
