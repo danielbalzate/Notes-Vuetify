@@ -5,16 +5,23 @@
 		</header>
 		<main>
 			<section class="player">
-				<v-card shaped class="mx-auto" max-width="344" outlined style="background-image: linear-gradient(to right, rgb(197, 119, 230), rgb(255, 88, 88));">
-					<v-list-item two-line>
+				<br />
+				<v-card class="mx-auto" outlined>
+					<v-img class="white--text align-end" height="200px" :src="current.img" :alt="current.img" style="opacity: 0.5;"></v-img>
+					<v-list-item two-line style="margin-left:0%; ">
 						<v-list-item-content>
 							<div class="overline mb-4 song-title">{{ current.title }}</div>
 							<v-list-item-title class="headline mb-1 song-title">{{ current.artist }}</v-list-item-title>
 						</v-list-item-content>
-						<v-img width="70" class="img" :src="current.img" :alt="current.img" style="margin-top:5%"></v-img>
 					</v-list-item>
+					<v-img
+						class="img"
+						:src="current.img"
+						:alt="current.img"
+						style="position: absolute; width: 120px; margin-bottom: 26%; margin-top: -70%; margin-left: 57%; border-radius: 10px;"
+					></v-img>
 
-					<div class="controls">
+					<div class="controls" style="z-index:-3">
 						<v-btn class="mx-2 prev" fab dark x-small color="blue" @click="prev">
 							<v-icon dark>mdi-skip-previous</v-icon>
 						</v-btn>
@@ -31,34 +38,25 @@
 				</v-card>
 			</section>
 			<section class="playlist">
-				<!-- <v-bottom-navigation
-					:value="activeBtn"
-					color="deep-purple"
-					horizontal
-					
-				>
-					<v-btn @click="play(song)" class="d-flex flex-row mb-6">
-						<span>{{ song.title }} - {{ song.artist }}</span>
-					</v-btn>
-					<v-btn v-if="song.src == current.src" @click="play(song)">
-						<v-icon>mdi-alien</v-icon>
-					</v-btn>
-					<v-btn v-if="song.src == current.src" @click="pause(song)">
-						<v-icon>mdi-emoticon-sad-outline</v-icon>
-					</v-btn>
-				</v-bottom-navigation> -->
-				<v-card
-					shaped
-					class="mx-auto"
-					max-width="344"
-					v-for="song in songs"
-					:key="song.src"
-					@click="play(song)"
-					:class="song.src == current.src ? 'song playing' : 'song'"
-					style="margin-top:3%"
-				>
-					<v-card-text>{{ song.title }} - {{ song.artist }}</v-card-text>
-				</v-card>
+				<div>
+					<v-switch v-model="reverse" label="Cambiar de posición"></v-switch>
+					<v-timeline :reverse="reverse" dense style="margin-left: 5%;">
+						<v-timeline-item v-for="song in songs" :key="song.src" :class="song.src == current.src ? 'song playing' : 'song'">
+							<template v-slot:icon>
+								<v-avatar>
+									<img :src="song.img" />
+								</v-avatar>
+							</template>
+							<v-card class="elevation-2">
+								<v-card-title class="headline hoverOpacity" @click="play(song)">
+									{{ song.title }}
+									<br />
+									{{ song.artist }}
+								</v-card-title>
+							</v-card>
+						</v-timeline-item>
+					</v-timeline>
+				</div>
 			</section>
 
 			<!-- <v-footer absolute class="font-weight-medium" style="background-color: #379ACC ">
@@ -78,8 +76,8 @@ export default {
 		return {
 			current: {},
 			index: 0,
+			reverse: false,
 			isPlaying: false,
-			activeBtn: 1,
 			icons: ["mdi-facebook", "mdi-twitter", "mdi-instagram"],
 			songs: [
 				{
@@ -174,7 +172,48 @@ export default {
 </script>
 
 <style>
-* {
+body {
+	background-repeat: repeat;
+	background-image: url("./assets/img/weed-body.jpg");
+}
+header {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	padding: 15px;
+	background: linear-gradient(90deg, rgba(253, 247, 29, 1) 22%, rgba(146, 252, 69, 1) 100%);
+	color: azure;
+}
+.playlist :hover {
+	color: rgb(158, 238, 30);
+}
+.player {
+	text-align: center;
+}
+.song-title {
+	color: #212121;
+	font-size: 20px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+.play,
+.pause {
+	padding: 15px 25px;
+	color: azure;
+	background: radial-gradient(circle, rgba(63, 94, 251, 1) 29%, rgba(30, 42, 92, 1) 100%);
+}
+.next,
+.prev {
+	color: azure;
+	background: radial-gradient(circle, rgba(63, 94, 251, 1) 29%, rgba(30, 42, 92, 1) 100%);
+}
+.controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0px 0px 15px 0px;
+}
+/* * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -271,5 +310,5 @@ button:hover {
 	display: block;
 	object-fit: cover;
 	border-radius: 20px;
-}
+} */
 </style>
