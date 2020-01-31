@@ -211,7 +211,6 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0px 0px 15px 0px;
 }
 /* * {
 	margin: 0;
