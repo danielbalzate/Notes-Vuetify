@@ -20,7 +20,7 @@
 			<HelloWorld />
 			<template>
 				<div id="app">
-					<v-progress-linear :value="UploadValue"></v-progress-linear>
+					<v-progress-linear :value="uploadValue"></v-progress-linear>
 
 					<v-card class="pa-md-4 mx-auto mt-7" color="white" width="90%">
 						<v-card-text>
@@ -46,7 +46,7 @@
 									</template>
 								</v-file-input>
 								<div class="text-center">
-									<v-btn class="ma-2" outlined color="blue darken-3">Subir archivo</v-btn>
+									<v-btn class="ma-2" outlined color="blue darken-3" @click="onUpload">Subir archivo</v-btn>
 								</div>
 								<img :src="this.picture" width="40%" alt="" />
 							</template>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 import HelloWorld from "./components/HelloWorld";
 
 export default {
@@ -69,7 +70,36 @@ export default {
 	},
 
 	data: () => ({
-		files: []
-	})
+		files: [],
+		uploadValue: 0,
+		picture: null
+	}),
+	methods: {
+		onFileSelected(event) {
+			this.files = event.target.onFileSelected[0];
+		},
+
+		onUpload() {
+			const storageRef = firebase.storage().ref(`/img/${this.files.name}`);
+			const task = storageRef.put(this.files);
+			task.on(
+				"state_changed",
+				(snapshot) => {
+					let porcentaje = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+					this.uploadValue = porcentaje;
+				},
+				(error) => {
+					console.log(error.message),
+						() => {
+							this.uploadValue = 100;
+							task.snapshot.ref.getDownloadURL().then((url) => {
+								this.picture = url;
+								console.log(this.picture);
+							});
+						};
+				}
+			);
+		}
+	}
 };
 </script>
