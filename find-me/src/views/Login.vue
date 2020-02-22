@@ -12,7 +12,7 @@
 
 						Google
 					</v-btn>
-					<v-btn block color="info">
+					<v-btn block color="info" @click="loginFacebook">
 						<v-icon left dark>fab fa-facebook-f</v-icon>
 						Facebook
 					</v-btn>
@@ -27,7 +27,7 @@
 	</v-layout>
 </template>
 <script>
-import {firebase, auth} from "@/firebase";
+import {firebase, auth, db} from "@/firebase";
 
 export default {
 	data() {
@@ -36,12 +36,33 @@ export default {
 		};
 	},
 	methods: {
-		async loginGoogle() {
+		loginFacebook() {
+			const provider = new firebase.auth.FacebookAuthProvider();
+			this.LoginAndRegisterUser(provider);
+		},
+		loginGoogle() {
 			const provider = new firebase.auth.GoogleAuthProvider();
+			this.LoginAndRegisterUser(provider);
+		},
+		async LoginAndRegisterUser(provider) {
 			firebase.auth().languageCode = "es";
 			try {
 				const result = await firebase.auth().signInWithPopup(provider);
+
 				const user = result.user;
+				//Ingresar usuario
+				const userData = {
+					name: user.displayName,
+					email: user.email,
+					photo: user.photoURL,
+					uid: user.uid
+				};
+
+				await db
+					.collection("users")
+					.doc(userData.uid)
+					.set(userData);
+				console.log("Usuario guardado");
 				// console.log("TCL: loginGoogle -> user", user);
 			} catch (error) {
 				// console.log("TCL: loginGoogle -> error", error);
