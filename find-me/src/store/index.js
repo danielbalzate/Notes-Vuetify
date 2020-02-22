@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import {auth} from "@/firebase";
+import router from "@/router";
 
 Vue.use(Vuex);
 
@@ -21,6 +23,11 @@ export default new Vuex.Store({
 				uid: user.uid
 			};
 			commit("newUser", user);
+		},
+		logoutUser({commit}) {
+			auth.signOut();
+			commit("newUser", null);
+			router.push({name: "Ingreso"});
 		}
 	},
 	modules: {}

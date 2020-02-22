@@ -29,6 +29,7 @@
 <script>
 import {firebase, auth, db} from "@/firebase";
 import {mapMutations} from "vuex";
+import router from "@/router";
 
 export default {
 	data() {
@@ -40,13 +41,13 @@ export default {
 		...mapMutations(["newUser"]),
 		loginFacebook() {
 			const provider = new firebase.auth.FacebookAuthProvider();
-			this.LoginAndRegisterUser(provider);
+			this.loginAndRegisterUser(provider);
 		},
 		loginGoogle() {
 			const provider = new firebase.auth.GoogleAuthProvider();
-			this.LoginAndRegisterUser(provider);
+			this.loginAndRegisterUser(provider);
 		},
-		async LoginAndRegisterUser(provider) {
+		async loginAndRegisterUser(provider) {
 			firebase.auth().languageCode = "es";
 			try {
 				const result = await firebase.auth().signInWithPopup(provider);
@@ -67,6 +68,7 @@ export default {
 					.doc(userData.uid)
 					.set(userData);
 				console.log("Usuario guardado");
+				router.push({name: "Home"});
 				// console.log("TCL: loginGoogle -> user", user);
 			} catch (error) {
 				// console.log("TCL: loginGoogle -> error", error);
