@@ -28,6 +28,7 @@
 </template>
 <script>
 import {firebase, auth, db} from "@/firebase";
+import {mapMutations} from "vuex";
 
 export default {
 	data() {
@@ -36,6 +37,7 @@ export default {
 		};
 	},
 	methods: {
+		...mapMutations(["newUser"]),
 		loginFacebook() {
 			const provider = new firebase.auth.FacebookAuthProvider();
 			this.LoginAndRegisterUser(provider);
@@ -57,6 +59,8 @@ export default {
 					photo: user.photoURL,
 					uid: user.uid
 				};
+
+				this.newUser(user);
 
 				await db
 					.collection("users")
