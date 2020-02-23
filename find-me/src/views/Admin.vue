@@ -1,7 +1,7 @@
 <template>
 	<v-layout justify-center>
-		<v-flex xs6>
-			<v-card class="text-center">
+		<v-flex xs10>
+			<v-card class="text-center mt-5">
 				<v-card-text>
 					<v-avatar>
 						<img :src="user.photo" />
@@ -9,13 +9,20 @@
 				</v-card-text>
 
 				<v-card-text>
-					<h3>{{ user.name }}</h3>
+					<h3 class="font-weight-black">{{ user.name }}</h3>
 				</v-card-text>
-
+				<v-divider></v-divider>
+				<span class="title font-weight-light">Cambiar foto de perfil</span>
 				<v-card-text>
 					<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
-					<v-btn @click="$refs.btnUploadFile.click()">Buscar Imagen</v-btn>
-					<v-btn :disabled="file === null" @click="uploadImg()" :loading="loading">Subir Imagen</v-btn>
+					<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
+						<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
+						Imagen
+					</v-btn>
+					<v-btn :disabled="file === null" @click="uploadImg()" :loading="loading" color="lime" class="white--text ma-1">
+						<v-icon dark right class="mr-3">fas fa-rocket</v-icon>
+						Subir
+					</v-btn>
 				</v-card-text>
 
 				<v-card-text v-if="error">

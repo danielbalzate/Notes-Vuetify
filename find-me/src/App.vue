@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<Navbar v-if="(user != '')"></Navbar>
+		<Navbar v-if="user != ''"></Navbar>
 		<v-content>
 			<v-container>
 				<router-view></router-view>
