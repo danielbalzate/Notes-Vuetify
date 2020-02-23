@@ -6,9 +6,15 @@ Vue.use(VueRouter);
 
 const routes = [
 	{
-		path: "/",
+		path: "/home",
 		name: "Home",
 		component: () => import(/* webpackChunkName: "about" */ "../views/Home.vue"),
+		meta: {requiresAuth: true}
+	},
+	{
+		path: "/admin",
+		name: "Admin",
+		component: () => import(/* webpackChunkName: "about" */ "../views/Admin.vue"),
 		meta: {requiresAuth: true}
 	},
 	{
