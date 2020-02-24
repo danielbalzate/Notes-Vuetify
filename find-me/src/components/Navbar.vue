@@ -49,7 +49,7 @@ export default {
 		return {
 			drawer: true,
 			items: [
-				{title: "Inicio", icon: "fas fa-igloo", path: {name: "Home"}},
+				{title: "Últimas publicaciones", icon: "fas fa-igloo", path: {name: "Home"}},
 				{title: "Cambiar foto", icon: "fas fa-camera-retro", path: {name: "Admin"}},
 				{title: "Adopta", icon: "fas fa-paw", path: {name: "Adopt"}}
 			]

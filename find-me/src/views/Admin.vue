@@ -19,15 +19,15 @@
 						<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
 						Imagen
 					</v-btn>
-					<v-btn :disabled="file === null" @click="uploadImg()" :loading="loading" color="lime" class="white--text ma-1">
+					<v-btn :disabled="file === null" @click="uploadImg()" color="lime" class="white--text ma-1">
 						<v-icon dark right class="mr-3">fas fa-rocket</v-icon>
 						Subir
 					</v-btn>
 				</v-card-text>
 
-				<v-card-text v-if="error">
+				<!-- <v-card-text v-if="error">
 					<h4>{{ error }}</h4>
-				</v-card-text>
+				</v-card-text> -->
 
 				<v-card-text v-if="file">
 					<h4>{{ file.name }}</h4>
@@ -40,14 +40,13 @@
 <script>
 import {mapState} from "vuex";
 import {firebase, storage, db} from "@/firebase";
+import Swal from "sweetalert2";
 
 export default {
 	data() {
 		return {
 			file: null,
-			urlTmp: "",
-			loading: false,
-			error: null
+			urlTmp: ""
 		};
 	},
 	computed: {
@@ -60,8 +59,12 @@ export default {
 			if (typeFile === "image/jpeg" || typeFile === "image/png") {
 				// console.log(event.target.files[0]);
 				this.file = event.target.files[0];
-				this.error = null;
 			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Oops... Archivo no válido",
+					text: "¡Debes seleccionar una imagen!"
+				});
 				this.error = "Archivo no valido";
 				this.file = null;
 				return;
@@ -76,7 +79,12 @@ export default {
 		},
 		async uploadImg() {
 			try {
-				this.loading = true;
+				Swal.fire({
+					title: "Estamos subiendo tu imagen",
+					onBeforeOpen: () => {
+						Swal.showLoading();
+					}
+				});
 				const refImg = storage
 					.ref()
 					.child(this.user.email)
@@ -96,12 +104,21 @@ export default {
 						photo: urlDownload
 					});
 
-				this.error = "Imagen subida correctamente";
+				Swal.fire({
+					icon: "success",
+					title: "¡Imagen actualizada correctamente!",
+					showConfirmButton: false,
+					timer: 1000
+				});
 				this.file = null;
 			} catch (error) {
 				console.log("TCL: uploadImg -> error", error);
 			} finally {
-				this.loading = false;
+				/* db.collection("chatGlobal")
+					.doc(this.user.uid)
+					.update({
+						avatarUserPost: urlDownload
+					}); */
 			}
 		}
 	}
