@@ -114,6 +114,11 @@ export default {
 			} catch (error) {
 				console.log("TCL: uploadImg -> error", error);
 			} finally {
+				/* db.collection("chatGlobal")
+					.doc(this.user.uid)
+					.update({
+						avatarUserPost: urlDownload
+					}); */
 			}
 		}
 	}
