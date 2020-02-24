@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {auth, db} from "@/firebase";
 import router from "@/router";
-import posts from "../modules/posts";
+// import posts from "../modules/posts";
 
 Vue.use(Vuex);
 
@@ -54,5 +54,7 @@ export default new Vuex.Store({
 			router.push({name: "Ingreso"});
 		}
 	},
-	modules: {posts}
+	modules: {
+		/* posts */
+	}
 });

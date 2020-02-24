@@ -21,14 +21,50 @@
 </template>
 <script>
 import {mapState} from "vuex";
+import {db} from "@/firebase";
+
 // @ is an alias to /src
 export default {
 	data() {
-		return {};
+		return {
+			posts: [
+				/* 	{
+					avatarUserPost: "red",
+					userPost: "Rogrigo Lara",
+					titlePost: "Ayuda amigos",
+					imgPost: "https://cdn.vuetifyjs.com/images/cards/mountain.jpg",
+					messagePost: "Visit ten places on our planet that are undergoing the biggest changes today."
+				}, */
+			]
+		};
 	},
 	computed: {
-		...mapState(["user"]),
-		...mapState("posts", ["posts"])
+		...mapState(["user"])
+		// Creo que no lo voy a utilizar modular
+		// ...mapState("posts", ["posts"])
+	},
+	created() {
+		this.getChatGlobal();
+	},
+	methods: {
+		async getChatGlobal() {
+			try {
+				const resDB = await db.collection("chatGlobal").get();
+				resDB.forEach((res) => {
+					// console.log("TCL: getChatGlobal -> res", res);
+					const chatGlobal = {
+						avatarUserPost: res.data().avatarUserPost,
+						userPost: res.data().userPost,
+						titlePost: res.data().titlePost,
+						imgPost: res.data().imgPost,
+						messagePost: res.data().messagePost
+					};
+					this.posts.push(chatGlobal);
+				});
+			} catch (error) {
+				console.log("TCL: getChatGlobal -> error", error);
+			}
+		}
 	}
 };
 </script>
