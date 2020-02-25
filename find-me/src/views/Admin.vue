@@ -87,8 +87,8 @@ export default {
 				});
 				const refImg = storage
 					.ref()
-					.child(this.user.email)
-					.child("Photo Profile");
+					.child("PhotoProfileUsers")
+					.child(this.user.email);
 				const res = await refImg.put(this.file);
 				// console.log(res);
 
