@@ -143,13 +143,20 @@ export default {
 					.get();
 				resDB.forEach((res) => {
 					// console.log("TCL: getPostGlobal -> res", res);
+					// console.log("TCL: getPostGlobal -> res.data().registerDate", new Date(res.data().registerDate.seconds * 1000));
+					// console.log("TCL: getPostGlobal -> hola", hola);
+					const registerDate = new Date(res.data().registerDate.seconds * 1000)
+						.toISOString()
+						.slice(-30, -8)
+						.replace("T", " ");
+
 					const postGlobal = {
 						avatarUserPost: res.data().avatarUserPost,
 						userPost: res.data().userPost,
 						titlePost: res.data().titlePost,
 						imgPost: res.data().imgPost,
 						messagePost: res.data().messagePost,
-						registerDate: res.data().registerDate
+						registerDate: registerDate
 					};
 					this.posts.push(postGlobal);
 				});
@@ -210,6 +217,7 @@ export default {
 					this.dialog = true;
 				}
 			} catch (error) {
+				console.error("Oe");
 				console.log("TCL: addPost -> error", error);
 			}
 		},
