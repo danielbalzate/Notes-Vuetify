@@ -25,7 +25,7 @@
 											<v-flex xs-6>
 												<v-card flat class="transparent">
 													<v-card-title primary-title class="layout justify-center">
-														<div class="headline">Registre un post</div>
+														<div class="headline">Registrar un post</div>
 														<v-spacer></v-spacer>
 													</v-card-title>
 
@@ -74,16 +74,24 @@
 					<img :src="user.photo" />
 				</v-avatar>
 				<v-list-item-content>
-					<v-list-item-title class="headline">{{ post.titlePost }}</v-list-item-title>
-					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
+					<v-list-item-title class="subtitle-1">{{ post.titlePost }}</v-list-item-title>
+					<v-list-item-subtitle>{{ user.uid }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
+			<router-link :to="{name: 'Post', params: {id: post.id, userId: user.uid}}">
+				<v-img :src="post.imgPost" height="194"></v-img>
+			</router-link>
+			<div align="center">
+				<v-btn small disabled class="pa-1 ma-1">
+					Vistas:
+				</v-btn>
+				<v-chip class="pa-2 ma-2" color="indigo darken-3" small outlined>
+					{{ post.registerDate }}
+					<v-icon x-small class="ml-1">fas fa-calendar-day</v-icon>
+				</v-chip>
 
-			<v-img :src="post.imgPost" height="194"></v-img>
-			<v-chip class="ma-2" color="indigo darken-3" outlined>
-				<v-icon left>mdi-fire</v-icon>
-				{{ post.registerDate }}
-			</v-chip>
+				<v-icon color="red">fas fa-heart</v-icon>
+			</div>
 			<v-card-text>
 				{{ post.messagePost }}
 			</v-card-text>
@@ -109,15 +117,7 @@ export default {
 			titlePost: "",
 			messagePost: null,
 			dialog: false,
-			posts: [
-				/* 	{
-					avatarUserPost: "red",
-					userPost: "Rogrigo Lara",
-					titlePost: "Ayuda amigos",
-					imgPost: "https://cdn.vuetifyjs.com/images/cards/mountain.jpg",
-					messagePost: "Visit ten places on our planet that are undergoing the biggest changes today."
-				}, */
-			]
+			posts: []
 		};
 	},
 	computed: {
@@ -142,8 +142,8 @@ export default {
 					.collection("posts")
 					.get();
 				resDB.forEach((res) => {
-					// console.log("TCL: getPostGlobal -> res", res);
-					// console.log("TCL: getPostGlobal -> res.data().registerDate", new Date(res.data().registerDate.seconds * 1000));
+					//console.log("TCL: getPostGlobal -> res", res.id);
+					// console.log("TCL: getPostGlobal -> res.data().registerDate", new Date(res.data().registerDate.seconds * 1000).toString());
 					// console.log("TCL: getPostGlobal -> hola", hola);
 					const registerDate = new Date(res.data().registerDate.seconds * 1000)
 						.toISOString()
@@ -151,6 +151,7 @@ export default {
 						.replace("T", " ");
 
 					const postGlobal = {
+						id: res.id,
 						avatarUserPost: res.data().avatarUserPost,
 						userPost: res.data().userPost,
 						titlePost: res.data().titlePost,

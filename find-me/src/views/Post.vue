@@ -1,0 +1,143 @@
+<template>
+	<v-layout>
+		<v-card class="mx-auto" max-width="600">
+			{{ post }}
+			<input type="text" :v-model="post.titlePost" />
+			<v-img class="white--text align-end" height="400px" :src="post.imgPost">
+				<v-card-title>{{ post.titlePost }}</v-card-title>
+			</v-img>
+
+			<v-card-subtitle class="pb-0">{{ post.userPost }}</v-card-subtitle>
+
+			<v-card-text class="text--primary">
+				<div>{{ post.messagePost }}</div>
+			</v-card-text>
+
+			<v-card-actions>
+				<v-btn color="primary" dark @click.stop="dialog = true">
+					Open Dialog
+				</v-btn>
+
+				<v-dialog v-model="dialog" persistent max-width="1200">
+					<v-card>
+						<v-card-text>
+							<v-form v-model="isValid" @submit.prevent="editPost(post)">
+								<v-container>
+									<v-row>
+										<v-flex xs-6>
+											<v-card flat class="transparent">
+												<v-card-title primary-title class="layout justify-center">
+													<div class="headline"></div>
+													<v-spacer></v-spacer>
+												</v-card-title>
+
+												<v-card-text class="title font-weight-light">
+													<v-text-field
+														:v-model="post.titlePost"
+														:value="post.titlePost"
+														:rules="titlePostRules"
+														:counter="10"
+														label="Título del post"
+														required
+													></v-text-field>
+												</v-card-text>
+												<v-card-text>
+													<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
+													<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
+														<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
+														Subir imagen
+													</v-btn>
+													<v-card-text v-if="file">
+														<h4>Nombre del archivo: {{ file.name }}</h4>
+														<v-img width="15%" :src="urlTmp"></v-img>
+													</v-card-text>
+												</v-card-text>
+												<v-list class="transparent">
+													<v-list-item>
+														<v-textarea outlined :v-model="post.messagePost" :value="post.messagePost" name="input-7-4" label="¡Esperamos tus mensajes!"></v-textarea>
+													</v-list-item>
+													<v-btn outlined color="red" @click="dialog = false">Cancelar</v-btn>
+
+													<v-btn outlined color="blue darken-2" @click="clear" class="ml-5">Limpiar post</v-btn>
+													<v-btn outlined color="green" class="ma-5" type="submit">Enviar</v-btn>
+												</v-list>
+											</v-card>
+										</v-flex>
+									</v-row>
+								</v-container>
+							</v-form>
+						</v-card-text>
+					</v-card>
+				</v-dialog>
+
+				<v-btn color="orange" text>
+					Algo más!
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-layout>
+</template>
+
+<script>
+import {mapState, mapActions} from "vuex";
+
+export default {
+	name: "Post",
+	data() {
+		return {
+			/* Upload image */
+			file: null,
+			urlTmp: "",
+			/* Rules form */
+			valid: false,
+			isValid: true,
+			titlePostRules: [(v) => !!v || "Para continuar debe ingresar un título", (v) => v.length <= 10 || "No debe superar las 10 letras"],
+			titlePost: "",
+			messagePost: null,
+			dialog: false,
+			infoPost: {
+				userId: this.$route.params.userId,
+				id: this.$route.params.id
+			}
+		};
+	},
+	computed: {
+		...mapState(["user"]),
+		...mapState(["post"])
+	},
+	methods: {
+		...mapActions(["getPost", "editPost"]),
+		clear() {
+			this.titlePost = "";
+			this.messagePost = "";
+		},
+		searchImg(event) {
+			const typeFile = event.target.files[0].type;
+
+			if (typeFile === "image/jpeg" || typeFile === "image/png") {
+				// console.log(event.target.files[0]);
+				this.file = event.target.files[0];
+			} else {
+				Swal.fire({
+					icon: "error",
+					title: "Oops... Archivo no válido",
+					text: "¡Debes seleccionar una imagen!"
+				});
+				this.error = "Archivo no valido";
+				this.file = null;
+				return;
+			}
+
+			const reader = new FileReader();
+			reader.readAsDataURL(this.file);
+			reader.onload = (e) => {
+				// console.log(e.target.result);
+				this.urlTmp = e.target.result;
+			};
+		}
+	},
+	created() {
+		this.getPost(this.infoPost);
+	}
+};
+</script>
