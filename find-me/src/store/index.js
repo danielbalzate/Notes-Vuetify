@@ -8,7 +8,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		user: ""
+		user: "",
+		post: ""
 	},
 	mutations: {
 		newUser(state, payload) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
 			} else {
 				state.user = payload;
 			}
+		},
+		setPost(state, payload) {
+			state.post = payload;
 		}
 	},
 	actions: {
@@ -52,6 +56,40 @@ export default new Vuex.Store({
 			auth.signOut();
 			commit("newUser", null);
 			router.push({name: "Ingreso"});
+		},
+		async getPost({commit}, infoPost) {
+			try {
+				const info = Object.values(infoPost);
+				console.log("TCL: getPost -> info", info[0], info[1]);
+				db.collection("users")
+					.doc(info[0])
+					.collection("posts")
+					.doc(info[1])
+					.get()
+					.then((doc) => {
+						// console.log("TCL: getPost -> doc", doc.data());
+						let post = doc.data();
+						post.id = doc.id;
+						console.log(post);
+						commit("setPost", post);
+					});
+			} catch (error) {
+				console.log("TCL: setUser -> error", error);
+			}
+		},
+		editPost({commit}, post) {
+			const hola = Object.values(post);
+			console.log("TCL: editPost -> hola", hola);
+			/* db.collection("users")
+				.doc(hola[0])
+				.collection("posts")
+				.doc(hola[1])
+				.update({
+					titlePost: post.titlePost
+				})
+				.then(() => {
+					console.log("Eres el puto amo!!!");
+				}); */
 		}
 	},
 	modules: {
