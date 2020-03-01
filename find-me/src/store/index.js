@@ -86,15 +86,27 @@ export default new Vuex.Store({
 			// console.log("TCL: editPost -> PostID", infoPost[7]);
 
 			db.collection("users")
-				.doc(infoPost[6])
+				.doc(infoPost[11])
 				.collection("posts")
-				.doc(infoPost[7])
+				.doc(infoPost[13])
 				.update({
 					titlePost: post.titlePost,
 					messagePost: post.messagePost,
-					imgPost: post.imgPost
+					imgPost: post.imgPost,
+					breed: post.breed,
+					species: post.species,
+					weight: post.weight,
+					height: post.height,
+					gender: post.gender,
+					age: post.age
 				})
 				.then(() => {
+					Swal.fire({
+						icon: "success",
+						title: "¡Has editado el post correctamente!",
+						showConfirmButton: false,
+						timer: 1000
+					});
 					router.push({name: "Adopt"});
 				});
 		},
@@ -112,9 +124,9 @@ export default new Vuex.Store({
 			}).then((result) => {
 				if (result.value) {
 					db.collection("users")
-						.doc(infoPost[6])
+						.doc(infoPost[11])
 						.collection("posts")
-						.doc(infoPost[7])
+						.doc(infoPost[13])
 						.delete()
 						.then(() => {
 							Swal.fire({
