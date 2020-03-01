@@ -1,15 +1,18 @@
 <template>
 	<v-card class="d-flex flex-wrap" flat tile no-gutters>
-		<v-card max-width="250" height="100%" class="ma-1">
-			<v-list-item>
+		<v-card max-width="250" height="100%" class="ma-1" color="lime darken-2">
+			<v-list-item class="mt-5">
 				<v-avatar class="mr-5">
 					<img :src="user.photo" />
 				</v-avatar>
 				<v-list-item-content>
 					<v-list-item-title class="headline">¡Bienvenido!</v-list-item-title>
-					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
+			<p class="ma-5">
+				Recuerda ser específico y claro al momento de subir un post, no podemos controlarlo todo, así que confiamos en ti para que subas contenido que realmente aporte a la comunidad. Gracias
+				por hacer del mundo un lugar más agradable.
+			</p>
 
 			<v-card-text>
 				<v-row justify="center">
@@ -30,13 +33,13 @@
 													</v-card-title>
 
 													<v-card-text class="title font-weight-light">
-														<v-text-field v-model="titlePost" :rules="titlePostRules" :counter="10" label="Título del post" required></v-text-field>
+														<v-text-field v-model="titlePost" :rules="titlePostRules" :counter="10" label="Nombre de tu mascota" required></v-text-field>
 													</v-card-text>
 													<v-card-text>
 														<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
 														<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
 															<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
-															Subir imagen
+															Muéstranos a tu peludo
 														</v-btn>
 														<v-card-text v-if="file">
 															<h4>Nombre del archivo: {{ file.name }}</h4>
@@ -49,7 +52,13 @@
 													</v-card-text>
 													<v-list class="transparent">
 														<v-list-item>
-															<v-textarea outlined v-model="messagePost" name="input-7-4" label="¡Esperamos tus mensajes!" value=""></v-textarea>
+															<v-textarea
+																outlined
+																v-model="messagePost"
+																name="input-7-4"
+																label="¡Has una breve descripción de la historia de tu peludo!"
+																value=""
+															></v-textarea>
 														</v-list-item>
 														<v-btn outlined color="red" @click="dialog = false">Cancelar</v-btn>
 
@@ -111,7 +120,7 @@ export default {
 			/* Rules form */
 			valid: false,
 			isValid: true,
-			titlePostRules: [(v) => !!v || "Para continuar debe ingresar un título", (v) => v.length <= 10 || "No debe superar las 10 letras"],
+			titlePostRules: [(v) => !!v || "Para continuar debe ingresar el nombre de tu mascota", (v) => v.length <= 10 || "No debe superar las 10 letras"],
 			titlePost: "",
 			messagePost: null,
 			dialog: false,

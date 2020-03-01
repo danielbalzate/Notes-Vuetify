@@ -1,5 +1,10 @@
 <template>
 	<v-layout>
+		<router-link :to="{name: 'Adopt'}" style="text-decoration: none">
+			<v-btn class="mx-2" fab dark small color="primary	" style="position:absolute; right:3%; top:3%; z-index:1">
+				<v-icon dark>fas fa-arrow-left</v-icon>
+			</v-btn>
+		</router-link>
 		<v-card class="mx-auto" max-width="600">
 			<v-img class="white--text align-end" height="400px" :src="post.imgPost">
 				<v-card-title>{{ post.titlePost }}</v-card-title>

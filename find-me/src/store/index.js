@@ -117,7 +117,12 @@ export default new Vuex.Store({
 						.doc(infoPost[7])
 						.delete()
 						.then(() => {
-							Swal.fire("¡Eliminado!", "Has eliminado el post correctamente", "success");
+							Swal.fire({
+								icon: "success",
+								title: "¡Has eliminado el post correctamente!",
+								showConfirmButton: false,
+								timer: 1000
+							});
 							router.push({name: "Adopt"});
 						});
 				}
