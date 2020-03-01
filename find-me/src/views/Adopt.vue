@@ -68,7 +68,7 @@
 			</v-card-text>
 		</v-card>
 
-		<v-card max-width="250" height="100%" class="ma-1" v-for="(post, index) in posts" :key="index">
+		<v-card max-width="250" class="ma-1" v-for="(post, index) in posts" :key="index">
 			<v-list-item>
 				<v-avatar class="mr-5">
 					<img :src="user.photo" />
@@ -92,9 +92,7 @@
 
 				<v-icon color="red">fas fa-heart</v-icon>
 			</div>
-			<v-card-text>
-				{{ post.messagePost }}
-			</v-card-text>
+			<v-card-text>{{ post.messagePost.substring(0, 120) }}...</v-card-text>
 		</v-card>
 	</v-card>
 </template>

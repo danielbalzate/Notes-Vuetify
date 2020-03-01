@@ -51,7 +51,8 @@ export default {
 			items: [
 				{title: "Últimas publicaciones", icon: "fas fa-igloo", path: {name: "Home"}},
 				{title: "Cambiar foto", icon: "fas fa-camera-retro", path: {name: "Admin"}},
-				{title: "Adopta", icon: "fas fa-paw", path: {name: "Adopt"}}
+				{title: "Adopta", icon: "fas fa-paw", path: {name: "Adopt"}},
+				{title: "Todos los post", icon: "fas fa-paw", path: {name: "PostGlobal"}}
 			]
 		};
 	},

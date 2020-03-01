@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {auth, db} from "@/firebase";
 import router from "@/router";
+import Swal from "sweetalert2";
 // import posts from "../modules/posts";
 
 Vue.use(Vuex);
@@ -96,6 +97,31 @@ export default new Vuex.Store({
 				.then(() => {
 					router.push({name: "Adopt"});
 				});
+		},
+		deletePost({commit}, post) {
+			const infoPost = Object.values(post);
+			Swal.fire({
+				title: "¿Estás seguro que quieres eliminar este post?",
+				text: "Recuerda que si el perrito fue adopato cambiar el estado",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Estoy seguro de eliminarlo",
+				cancelButtonText: "Cancelar"
+			}).then((result) => {
+				if (result.value) {
+					db.collection("users")
+						.doc(infoPost[6])
+						.collection("posts")
+						.doc(infoPost[7])
+						.delete()
+						.then(() => {
+							Swal.fire("¡Eliminado!", "Has eliminado el post correctamente", "success");
+							router.push({name: "Adopt"});
+						});
+				}
+			});
 		}
 	},
 	modules: {

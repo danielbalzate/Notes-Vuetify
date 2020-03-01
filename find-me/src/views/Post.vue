@@ -16,6 +16,10 @@
 					Editar Post
 				</v-btn>
 
+				<v-btn color="red" @click="deletePost(post)" dark>
+					Eliminar Post
+				</v-btn>
+
 				<v-dialog v-model="dialog" persistent max-width="1200">
 					<v-card>
 						<v-card-text>
@@ -60,10 +64,6 @@
 						</v-card-text>
 					</v-card>
 				</v-dialog>
-
-				<v-btn color="orange" text>
-					Algo más!
-				</v-btn>
 			</v-card-actions>
 		</v-card>
 	</v-layout>
@@ -99,7 +99,7 @@ export default {
 		...mapState(["post"])
 	},
 	methods: {
-		...mapActions(["getPost", "editPost"]),
+		...mapActions(["getPost", "editPost", "deletePost"]),
 		clear() {
 			this.titlePost = "";
 			this.messagePost = "";

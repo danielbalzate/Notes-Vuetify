@@ -32,6 +32,11 @@ const routes = [
 		path: "/post/:id",
 		name: "Post",
 		component: () => import(/* webpackChunkName: "about" */ "../views/Post.vue")
+	},
+	{
+		path: "/postGlobal",
+		name: "PostGlobal",
+		component: () => import(/* webpackChunkName: "about" */ "../views/PostGlobal.vue")
 	}
 ];
 
