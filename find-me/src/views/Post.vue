@@ -1,8 +1,6 @@
 <template>
 	<v-layout>
 		<v-card class="mx-auto" max-width="600">
-			{{ post }}
-			<input type="text" :v-model="post.titlePost" />
 			<v-img class="white--text align-end" height="400px" :src="post.imgPost">
 				<v-card-title>{{ post.titlePost }}</v-card-title>
 			</v-img>
@@ -15,7 +13,7 @@
 
 			<v-card-actions>
 				<v-btn color="primary" dark @click.stop="dialog = true">
-					Open Dialog
+					Editar Post
 				</v-btn>
 
 				<v-dialog v-model="dialog" persistent max-width="1200">
@@ -32,14 +30,7 @@
 												</v-card-title>
 
 												<v-card-text class="title font-weight-light">
-													<v-text-field
-														:v-model="post.titlePost"
-														:value="post.titlePost"
-														:rules="titlePostRules"
-														:counter="10"
-														label="Título del post"
-														required
-													></v-text-field>
+													<v-text-field v-model="post.titlePost" value="post.titlePost" :rules="titlePostRules" :counter="10" label="Título del post" required></v-text-field>
 												</v-card-text>
 												<v-card-text>
 													<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
@@ -54,7 +45,7 @@
 												</v-card-text>
 												<v-list class="transparent">
 													<v-list-item>
-														<v-textarea outlined :v-model="post.messagePost" :value="post.messagePost" name="input-7-4" label="¡Esperamos tus mensajes!"></v-textarea>
+														<v-textarea outlined v-model="post.messagePost" value="post.messagePost" name="input-7-4" label="¡Esperamos tus mensajes!"></v-textarea>
 													</v-list-item>
 													<v-btn outlined color="red" @click="dialog = false">Cancelar</v-btn>
 
@@ -80,6 +71,8 @@
 
 <script>
 import {mapState, mapActions} from "vuex";
+import {storage} from "@/firebase";
+import Swal from "sweetalert2";
 
 export default {
 	name: "Post",
@@ -134,6 +127,44 @@ export default {
 				// console.log(e.target.result);
 				this.urlTmp = e.target.result;
 			};
+			this.uploadImg();
+		},
+		async uploadImg() {
+			try {
+				Swal.fire({
+					title: "Estamos subiendo tu imagen",
+					onBeforeOpen: () => {
+						Swal.showLoading();
+					}
+				});
+				const actualDate = Date.now().toString();
+				const refImg = storage
+					.ref()
+					.child("Post")
+					.child(actualDate);
+				const res = await refImg.put(this.file);
+				// console.log(res);
+
+				const urlDownload = await refImg.getDownloadURL();
+				// console.log("TCL: uploadImg -> urlDownload", urlDownload);
+
+				this.post.imgPost = urlDownload;
+				Swal.fire({
+					icon: "success",
+					title: "¡Imagen actualizada correctamente!",
+					showConfirmButton: false,
+					timer: 1000
+				});
+				// console.log("TCL: uploadImg -> this.post.imgPost", this.post.imgPost);
+			} catch (error) {
+				console.log("TCL: uploadImg -> error", error);
+			} finally {
+				/* db.collection("chatGlobal")
+					.doc(this.user.uid)
+					.update({
+						avatarUserPost: urlDownload
+					}); */
+			}
 		}
 	},
 	created() {

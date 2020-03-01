@@ -60,7 +60,7 @@ export default new Vuex.Store({
 		async getPost({commit}, infoPost) {
 			try {
 				const info = Object.values(infoPost);
-				console.log("TCL: getPost -> info", info[0], info[1]);
+				// console.log("TCL: getPost -> info", info[0], info[1]);
 				db.collection("users")
 					.doc(info[0])
 					.collection("posts")
@@ -70,7 +70,7 @@ export default new Vuex.Store({
 						// console.log("TCL: getPost -> doc", doc.data());
 						let post = doc.data();
 						post.id = doc.id;
-						console.log(post);
+						// console.log(post);
 						commit("setPost", post);
 					});
 			} catch (error) {
@@ -78,18 +78,24 @@ export default new Vuex.Store({
 			}
 		},
 		editPost({commit}, post) {
-			const hola = Object.values(post);
-			console.log("TCL: editPost -> hola", hola);
-			/* db.collection("users")
-				.doc(hola[0])
+			const infoPost = Object.values(post);
+			// console.log("TCL: editPost -> infoPost", infoPost);
+			// console.log("TCL: photoPost -> photoPost", infoPost[1]);
+			// console.log("TCL: editPost -> PostID", infoPost[7]);
+			// console.log("TCL: editPost -> PostID", infoPost[7]);
+
+			db.collection("users")
+				.doc(infoPost[6])
 				.collection("posts")
-				.doc(hola[1])
+				.doc(infoPost[7])
 				.update({
-					titlePost: post.titlePost
+					titlePost: post.titlePost,
+					messagePost: post.messagePost,
+					imgPost: post.imgPost
 				})
 				.then(() => {
-					console.log("Eres el puto amo!!!");
-				}); */
+					router.push({name: "Adopt"});
+				});
 		}
 	},
 	modules: {

@@ -75,7 +75,7 @@
 				</v-avatar>
 				<v-list-item-content>
 					<v-list-item-title class="subtitle-1">{{ post.titlePost }}</v-list-item-title>
-					<v-list-item-subtitle>{{ user.uid }}</v-list-item-subtitle>
+					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
 			<router-link :to="{name: 'Post', params: {id: post.id, userId: user.uid}}">
@@ -195,7 +195,8 @@ export default {
 							titlePost: this.titlePost,
 							messagePost: this.messagePost,
 							imgPost: urlDownload,
-							registerDate: firebase.firestore.Timestamp.fromDate(new Date())
+							registerDate: firebase.firestore.Timestamp.fromDate(new Date()),
+							userUid: this.user.uid
 						});
 					Swal.fire({
 						icon: "success",
