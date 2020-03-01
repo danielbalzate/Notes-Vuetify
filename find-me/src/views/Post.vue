@@ -7,7 +7,9 @@
 		</router-link>
 		<v-card class="mx-auto" max-width="600">
 			<v-img class="white--text align-end" height="400px" :src="post.imgPost">
-				<v-card-title>{{ post.titlePost }}</v-card-title>
+				<v-chip class="ma-5" color="blue" text-color="white">
+					{{ post.titlePost }}
+				</v-chip>
 			</v-img>
 
 			<v-card-subtitle class="pb-0">{{ post.userPost }}</v-card-subtitle>
@@ -15,58 +17,96 @@
 			<v-card-text class="text--primary">
 				<div>{{ post.messagePost }}</div>
 			</v-card-text>
+			<v-card-text align="center">
+				<v-chip class="ma-1" color="blue" outlined>
+					<v-icon left class="ma-1">fas fa-paw</v-icon>
+					Raza: {{ post.breed }}
+				</v-chip>
+				<v-chip class="ma-1" color="blue" outlined>
+					<v-icon left class="ma-1">fas fa-cat</v-icon>
+					Especie: {{ post.species }}
+				</v-chip>
+				<v-chip class="ma-1" color="blue" outlined>
+					<v-icon left class="ma-1">fas fa-venus-mars</v-icon>
+					Genero: {{ post.gender }}
+				</v-chip>
+				<v-chip class="ma-1" color="blue" outlined>
+					<v-icon left>fas fa-feather-alt</v-icon>
+					Edad: {{ post.age }}
+				</v-chip>
+				<v-chip class="ma-1" color="blue" outlined>Peso: {{ post.weight }}</v-chip>
+				<v-chip class="ma-1" color="blue" outlined>Tamaño: {{ post.height }}</v-chip>
+			</v-card-text>
 
 			<v-card-actions>
-				<v-btn color="primary" dark @click.stop="dialog = true">
+				<v-btn color="primary" class="ml-5 mb-5" dark @click.stop="dialog = true">
 					Editar Post
 				</v-btn>
 
-				<v-btn color="red" @click="deletePost(post)" dark>
+				<v-btn color="red" class="ml-5 mr-5 mb-5" @click="deletePost(post)" dark>
 					Eliminar Post
 				</v-btn>
 
-				<v-dialog v-model="dialog" persistent max-width="1200">
-					<v-card>
-						<v-card-text>
-							<v-form v-model="isValid" @submit.prevent="editPost(post)">
-								<v-container>
-									<v-row>
-										<v-flex xs-6>
-											<v-card flat class="transparent">
-												<v-card-title primary-title class="layout justify-center">
-													<div class="headline"></div>
-													<v-spacer></v-spacer>
-												</v-card-title>
+				<v-dialog v-model="dialog" persistent max-width="800">
+					<v-card align="center ">
+						<v-form v-model="isValid" @submit.prevent="editPost(post)">
+							<v-container fluid class="pa-5">
+								<v-row class="pa-5">
+									<v-flex xs-6>
+										<v-card flat class="transparent">
+											<v-card-title primary-title class="layout justify-center">
+												<div class="headline">Editar post</div>
+											</v-card-title>
 
-												<v-card-text class="title font-weight-light">
-													<v-text-field v-model="post.titlePost" value="post.titlePost" :rules="titlePostRules" :counter="10" label="Título del post" required></v-text-field>
-												</v-card-text>
-												<v-card-text>
-													<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
-													<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
-														<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
-														Subir imagen
-													</v-btn>
-													<v-card-text v-if="file">
-														<h4>Nombre del archivo: {{ file.name }}</h4>
-														<v-img width="15%" :src="urlTmp"></v-img>
-													</v-card-text>
-												</v-card-text>
-												<v-list class="transparent">
-													<v-list-item>
-														<v-textarea outlined v-model="post.messagePost" value="post.messagePost" name="input-7-4" label="¡Esperamos tus mensajes!"></v-textarea>
-													</v-list-item>
-													<v-btn outlined color="red" @click="dialog = false">Cancelar</v-btn>
+											<v-card-text class="title font-weight-light">
+												<v-text-field v-model="post.titlePost" :rules="titlePostRules" :counter="10" label="Nombre de tu mascota" required></v-text-field>
+											</v-card-text>
+											<v-card-text>
+												<v-row>
+													<v-col cols="12" md="6">
+														<v-select :items="breed" v-model="post.breed" :label="post.breed" outlined></v-select>
+														<v-select :items="weight" v-model="post.weight" label="Peso" outlined></v-select>
+														<v-select :items="gender" v-model="post.gender" label="Genero" outlined></v-select>
+													</v-col>
+													<v-col cols="12" md="6">
+														<v-select :items="species" v-model="post.species" label="Especie" outlined></v-select>
+														<v-select :items="height" v-model="post.height" label="Tamaño" outlined></v-select>
+														<v-select :items="age" v-model="post.age" label="Edad" outlined></v-select>
+													</v-col>
+												</v-row>
 
-													<v-btn outlined color="blue darken-2" @click="clear" class="ml-5">Limpiar post</v-btn>
-													<v-btn outlined color="green" class="ma-5" type="submit">Enviar</v-btn>
-												</v-list>
-											</v-card>
-										</v-flex>
-									</v-row>
-								</v-container>
-							</v-form>
-						</v-card-text>
+												<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
+												<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
+													<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
+													Muéstranos a tu peludo
+												</v-btn>
+												<v-card-text v-if="file">
+													<h4>Nombre del archivo: {{ file.name }}</h4>
+													<v-img width="15%" :src="urlTmp"></v-img>
+												</v-card-text>
+												<!-- <v-btn :disabled="file === null" @click="uploadImg()" color="lime" class="white--text ma-1">
+															<v-icon dark right class="mr-3">fas fa-rocket</v-icon>
+															Subir
+														</v-btn> -->
+											</v-card-text>
+											<v-list class="transparent">
+												<v-list-item>
+													<v-textarea
+														outlined
+														v-model="post.messagePost"
+														name="input-7-4"
+														label="¡Has una breve descripción de la historia de tu peludo!"
+														value=""
+													></v-textarea>
+												</v-list-item>
+												<v-btn outlined color="red" @click="dialog = false">Cancelar</v-btn>
+												<v-btn outlined color="green" class="ma-5" type="submit">Enviar</v-btn>
+											</v-list>
+										</v-card>
+									</v-flex>
+								</v-row>
+							</v-container>
+						</v-form>
 					</v-card>
 				</v-dialog>
 			</v-card-actions>
@@ -92,6 +132,89 @@ export default {
 			titlePostRules: [(v) => !!v || "Para continuar debe ingresar un título", (v) => v.length <= 10 || "No debe superar las 10 letras"],
 			titlePost: "",
 			messagePost: null,
+			breed: [
+				"Criollo",
+				"American bully",
+				"Amstaff (American Staffordshire Terrier)",
+				"Azul de Gascuña",
+				"BeagleHarrier",
+				"Bodeguero",
+				"Border Collie",
+				"Boxer",
+				"Bulldog Francés",
+				"Bulldog Inglés",
+				"Bullterrier",
+				"Caniche",
+				"Carea leonés",
+				"Carey",
+				"Chihuahua",
+				"Cocker Spaniel",
+				"Común europeo",
+				"Dálmata",
+				"Doberman",
+				"Dogo CANARIO",
+				"Epagneul Breton",
+				"Fox Terrier",
+				"GALGO",
+				"Golden Retriever",
+				"Gos d'atura",
+				"Grifón",
+				"Husky",
+				"Labrador",
+				"Maine Coon",
+				"Mastín",
+				"Mastín del Pirineo",
+				"Mestizo",
+				"Nórdico",
+				"Otros",
+				"Palomino",
+				"Pastor",
+				"Pastor alemán",
+				"Pastor Belga",
+				"Pastor Belga Groenendael",
+				"Pastor Belga Malinois",
+				"Pastor Leonés",
+				"Pastor suizo",
+				"Pastor Vasco",
+				"Pequinés",
+				"Perdiguero de Burgos",
+				"Persa",
+				"Persa Americano",
+				"Pinscher Miniatura",
+				"Pitbull",
+				"Pointer",
+				"Presa Canario",
+				"Ratonero",
+				"Retriever",
+				"Rottweiler",
+				"Sabueso",
+				"Sabueso Español",
+				"Samoyedo",
+				"San bernardo",
+				"Schnauzer",
+				"Setter",
+				"Shar Pei",
+				"Shih Tzu",
+				"Siámes",
+				"Siamés Azul Point",
+				"Siames Red Point",
+				"Siberian Husky",
+				"Snowshoe",
+				"Spaniel Breton",
+				"Springel Spaniel",
+				"Staffordshire Bull Terrier",
+				"Staffy (Staffordshire Bull Terrier)",
+				"Teckel",
+				"Teckel Kaninchen Pelo Duro",
+				"Teckel Miniatura Pelo Duro",
+				"Terrier",
+				"Yorkshire"
+			],
+			species: ["Perro", "Gato"],
+			weight: ["Menos de 10 Kg", "Entre 10 Kg y 20 Kg", "Entre 20 Kg y 40 Kg", "Mayor a 40 kg"],
+			height: ["Pequeño", "Mediano", "Grande", "Muy grande"],
+			gender: ["Macho", "Hembra"],
+			age: ["Entre 0 a 6 meses", "Entre 6 meses a 1 año", "Entre 1 a 5 años", "Entre 5 a 10 años", "Más de 10 años"],
 			dialog: false,
 			infoPost: {
 				userId: this.$route.params.userId,
