@@ -3,11 +3,11 @@
 		<v-card max-width="250" class="ma-1" v-for="(post, index) in posts" :key="index">
 			<v-list-item>
 				<v-avatar class="mr-5">
-					<img :src="user.photo" />
+					<img :src="post.avatarUserPost" />
 				</v-avatar>
 				<v-list-item-content>
 					<v-list-item-title class="subtitle-1">{{ post.titlePost }}</v-list-item-title>
-					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
+					<v-list-item-subtitle>{{ post.userPost }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
 			<router-link :to="{name: 'Post', params: {id: post.id, userId: user.uid}}">
@@ -49,12 +49,13 @@ export default {
 	methods: {
 		async getPostGlobal() {
 			try {
+				const allData = [];
 				db.collection("users")
 					.get()
 					.then(function(querySnapshot) {
 						querySnapshot.forEach(function(doc) {
 							// doc.data() is never undefined for query doc snapshots
-							console.log("Doc Users", doc.id, " => ", doc.data());
+							// console.log("Doc Users", doc.id, " => ", doc.data());
 							db.collection("users")
 								.doc(doc.id)
 								.collection("posts")
@@ -77,10 +78,13 @@ export default {
 											registerDate: registerDate
 										};
 										console.log("TCL: getPostGlobal -> postGlobal", postGlobal);
+										allData.push(postGlobal);
 									});
 								});
 						});
 					});
+				// console.log("¿Todos los post por fin?", allData);
+				this.posts = allData;
 			} catch (error) {
 				console.log("TCL: getPostGlobal -> error", error);
 			}

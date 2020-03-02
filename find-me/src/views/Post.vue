@@ -64,7 +64,7 @@
 											<v-card-text>
 												<v-row>
 													<v-col cols="12" md="6">
-														<v-select :items="breed" v-model="post.breed" :label="post.breed" outlined></v-select>
+														<v-select :items="breed" v-model="post.breed" label="Raza" outlined></v-select>
 														<v-select :items="weight" v-model="post.weight" label="Peso" outlined></v-select>
 														<v-select :items="gender" v-model="post.gender" label="Genero" outlined></v-select>
 													</v-col>
