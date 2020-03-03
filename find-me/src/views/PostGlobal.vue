@@ -30,7 +30,6 @@
 </template>
 <script>
 import {db} from "@/firebase";
-
 import {mapState} from "vuex";
 
 export default {
