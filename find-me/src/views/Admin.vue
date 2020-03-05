@@ -1,39 +1,74 @@
 <template>
 	<v-layout justify-center>
 		<v-flex xs10>
-			<v-card class="text-center mt-5">
-				<v-card-text>
-					<v-avatar>
-						<img :src="user.photo" />
-					</v-avatar>
-				</v-card-text>
+			<v-row>
+				<v-card class="mx-auto" max-width="40%" height="100%">
+					<v-img :src="user.photo" height="300px"></v-img>
+					<v-card-title>{{ user.name }}</v-card-title>
+					<v-card-subtitle>
+						Cambiar foto de perfil
+					</v-card-subtitle>
+					<v-card-actions>
+						<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
+						<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
+							<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
+							Imagen
+						</v-btn>
+						<v-btn :disabled="file === null" @click="uploadImg()" color="lime" class="white--text ma-1">
+							<v-icon dark right class="mr-3">fas fa-rocket</v-icon>
+							Subir
+						</v-btn>
+					</v-card-actions>
+				</v-card>
 
-				<v-card-text>
-					<h3 class="font-weight-black">{{ user.name }}</h3>
-				</v-card-text>
-				<v-divider></v-divider>
-				<span class="title font-weight-light">Cambiar foto de perfil</span>
-				<v-card-text>
-					<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
-					<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
-						<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
-						Imagen
-					</v-btn>
-					<v-btn :disabled="file === null" @click="uploadImg()" color="lime" class="white--text ma-1">
-						<v-icon dark right class="mr-3">fas fa-rocket</v-icon>
-						Subir
-					</v-btn>
-				</v-card-text>
-
-				<!-- <v-card-text v-if="error">
-					<h4>{{ error }}</h4>
-				</v-card-text> -->
-
-				<v-card-text v-if="file">
-					<h4>{{ file.name }}</h4>
-					<v-img :src="urlTmp"></v-img>
-				</v-card-text>
-			</v-card>
+				<v-card class="mx-auto" max-width="40%" height="100%" v-if="file">
+					<v-img :src="urlTmp" height="300px"></v-img>
+					<v-card-subtitle class="font-weight-light">
+						Te ves cool, no lo pienses más y pon esta imagen de perfil, no seas vanidoso.
+					</v-card-subtitle>
+				</v-card>
+			</v-row>
+			<v-row>
+				<v-card class="mx-auto mt-5 " max-width="80%" height="100%">
+					<v-card-title>
+						Sabemos muy poco de ti
+					</v-card-title>
+					<v-card-subtitle>
+						Para nosotros es prioridad tu seguridad, por eso tú decides qué información mostrar, para empezar deber presionar la flecha que aparece al frente de cada uno de los items, no
+						te preocupes, si algún día ya no quieres mostrar más esta información la puedes ocultar.
+					</v-card-subtitle>
+					<v-card-actions>
+						<v-card-text>Descripción personal</v-card-text>
+						<v-spacer></v-spacer>
+						<v-btn icon @click="show = !show">
+							<v-icon>{{ show ? "fas fa-angle-up" : "fas fa-angle-down" }}</v-icon>
+						</v-btn>
+					</v-card-actions>
+					<v-expand-transition>
+						<div v-show="show">
+							<v-divider></v-divider>
+							<v-card-text>
+								<v-textarea outlined label="No seas tímido"></v-textarea>
+							</v-card-text>
+						</div>
+					</v-expand-transition>
+					<v-card-actions>
+						<v-card-text>Causa Social</v-card-text>
+						<v-spacer></v-spacer>
+						<v-btn icon @click="showSocial = !showSocial">
+							<v-icon>{{ showSocial ? "fas fa-angle-up" : "fas fa-angle-down" }}</v-icon>
+						</v-btn>
+					</v-card-actions>
+					<v-expand-transition>
+						<div v-show="showSocial">
+							<v-divider></v-divider>
+							<v-card-text>
+								<v-textarea outlined label="No seas tímido"></v-textarea>
+							</v-card-text>
+						</div>
+					</v-expand-transition>
+				</v-card>
+			</v-row>
 		</v-flex>
 	</v-layout>
 </template>
@@ -46,7 +81,9 @@ export default {
 	data() {
 		return {
 			file: null,
-			urlTmp: ""
+			urlTmp: "",
+			show: false,
+			showSocial: false
 		};
 	},
 	computed: {

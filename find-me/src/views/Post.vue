@@ -1,10 +1,10 @@
 <template>
 	<v-layout>
-		<router-link :to="{name: 'Adopt'}" style="text-decoration: none">
-			<v-btn class="mx-2" fab dark small color="primary	" style="position:absolute; right:3%; top:3%; z-index:1">
+		<a href="javascript:history.back(1)">
+			<v-btn class="mx-2" fab dark small color="primary" style="position:absolute; right:3%; top:3%; z-index:1">
 				<v-icon dark>fas fa-arrow-left</v-icon>
 			</v-btn>
-		</router-link>
+		</a>
 		<v-card class="mx-auto" max-width="600">
 			<v-img class="white--text align-end" height="400px" :src="post.imgPost">
 				<v-chip class="ma-5" color="blue" text-color="white">
@@ -39,12 +39,16 @@
 			</v-card-text>
 
 			<v-card-actions>
-				<v-btn color="primary" class="ml-5 mb-5" dark @click.stop="dialog = true">
+				<v-btn color="primary" class="ml-5 mb-5" v-if="post.userUid == user.uid" dark @click.stop="dialog = true">
 					Editar Post
 				</v-btn>
 
-				<v-btn color="red" class="ml-5 mr-5 mb-5" @click="deletePost(post)" dark>
+				<v-btn color="red" class="ml-5 mr-5 mb-5" v-if="post.userUid == user.uid" @click="deletePost(post)" dark>
 					Eliminar Post
+				</v-btn>
+
+				<v-btn color="red" class="ml-5 mr-5 mb-5" v-if="post.userUid != user.uid" @click="" dark>
+					Adoptar
 				</v-btn>
 
 				<v-dialog v-model="dialog" persistent max-width="800">

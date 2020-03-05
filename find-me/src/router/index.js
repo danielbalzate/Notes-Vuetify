@@ -37,6 +37,16 @@ const routes = [
 		path: "/postGlobal",
 		name: "PostGlobal",
 		component: () => import(/* webpackChunkName: "about" */ "../views/PostGlobal.vue")
+	},
+	{
+		path: "/users",
+		name: "Users",
+		component: () => import(/* webpackChunkName: "about" */ "../views/Users.vue")
+	},
+	{
+		path: "/losts",
+		name: "Losts",
+		component: () => import(/* webpackChunkName: "about" */ "../views/Losts.vue")
 	}
 ];
 

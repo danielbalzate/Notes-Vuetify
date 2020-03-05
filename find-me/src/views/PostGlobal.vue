@@ -10,7 +10,7 @@
 					<v-list-item-subtitle>{{ post.userPost }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
-			<router-link :to="{name: 'Post', params: {id: post.id, userId: user.uid}}">
+			<router-link :to="{name: 'Post', params: {id: post.id, userId: post.userUid}}">
 				<v-img :src="post.imgPost" height="194"></v-img>
 			</router-link>
 			<div align="center">
@@ -30,7 +30,6 @@
 </template>
 <script>
 import {db} from "@/firebase";
-
 import {mapState} from "vuex";
 
 export default {
@@ -72,12 +71,13 @@ export default {
 											id: res.id,
 											avatarUserPost: res.data().avatarUserPost,
 											userPost: res.data().userPost,
+											userUid: res.data().userUid,
 											titlePost: res.data().titlePost,
 											imgPost: res.data().imgPost,
 											messagePost: res.data().messagePost,
 											registerDate: registerDate
 										};
-										console.log("TCL: getPostGlobal -> postGlobal", postGlobal);
+										// console.log("TCL: getPostGlobal -> postGlobal", postGlobal);
 										allData.push(postGlobal);
 									});
 								});
