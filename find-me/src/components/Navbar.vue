@@ -53,7 +53,8 @@ export default {
 				{title: "Perfil", icon: "fas fa-user-circle", path: {name: "Admin"}},
 				{title: "Registrar post", icon: "fas fa-keyboard", path: {name: "Adopt"}},
 				{title: "¡Adopta!", icon: "fas fa-paw", path: {name: "PostGlobal"}},
-				{title: "Usuarios", icon: "fas fa-users", path: {name: "Users"}}
+				{title: "Usuarios", icon: "fas fa-users", path: {name: "Users"}},
+				{title: "Perdidos", icon: "fas fa-users", path: {name: "Losts"}}
 			]
 		};
 	},

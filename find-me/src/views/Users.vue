@@ -10,6 +10,8 @@
 					<v-list-item-content>
 						<v-list-item-title v-text="user.name"></v-list-item-title>
 					</v-list-item-content>
+					<v-chip x-small class="mr-5">En adopción: 0</v-chip>
+					<v-chip x-small>Reportes útiles: 0</v-chip>
 					<v-list-item-icon>
 						<v-icon :color="user.enabled ? 'lime' : 'red darken-1'">fas fa-bell</v-icon>
 					</v-list-item-icon>
