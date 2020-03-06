@@ -54,7 +54,8 @@ export default {
 				{title: "Registrar post", icon: "fas fa-keyboard", path: {name: "Adopt"}},
 				{title: "¡Adopta!", icon: "fas fa-paw", path: {name: "PostGlobal"}},
 				{title: "Usuarios", icon: "fas fa-users", path: {name: "Users"}},
-				{title: "Perdidos", icon: "fas fa-users", path: {name: "Losts"}}
+				{title: "Perdidos", icon: "fas fa-users", path: {name: "Losts"}},
+				{title: "Reportar", icon: "fas fa-users", path: {name: "ReportLostPet"}}
 			]
 		};
 	},

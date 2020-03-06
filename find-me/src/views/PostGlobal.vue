@@ -71,6 +71,7 @@ export default {
 											id: res.id,
 											avatarUserPost: res.data().avatarUserPost,
 											userPost: res.data().userPost,
+											userMail: res.data().userMail,
 											userUid: res.data().userUid,
 											titlePost: res.data().titlePost,
 											imgPost: res.data().imgPost,

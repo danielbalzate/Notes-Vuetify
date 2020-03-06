@@ -10,15 +10,19 @@
 				</v-list-item-content>
 			</v-list-item>
 			<p class="ma-5">
-				Recuerda ser específico y claro al momento de subir un post, no podemos controlarlo todo, así que confiamos en ti para que subas contenido que realmente aporte a la comunidad. Gracias
-				por hacer del mundo un lugar más agradable.
+				Recuerda ser específico y claro al momento de reportar un animal perdido, no podemos controlarlo todo, así que confiamos en ti para que subas contenido que realmente aporte a la
+				comunidad. Gracias por hacer del mundo un lugar más agradable.
 			</p>
 
 			<v-card-text>
 				<v-row justify="center">
 					<v-dialog v-model="dialog" persistent max-width="800">
 						<template v-slot:activator="{on}">
-							<v-btn color="primary" dark v-on="on">Registrar post</v-btn>
+							<v-btn color="primary" x-large dark v-on="on">
+								Registrar
+								<br />
+								mascota perdida
+							</v-btn>
 						</template>
 						<v-card align="center ">
 							<v-form v-model="isValid" @submit.prevent="addPost()">
@@ -27,12 +31,10 @@
 										<v-flex xs-6>
 											<v-card flat class="transparent">
 												<v-card-title primary-title class="layout justify-center">
-													<div class="headline">Registrar un post</div>
+													<div class="headline">Registrar mascota perdida</div>
 												</v-card-title>
 
-												<v-card-text class="title font-weight-light">
-													<v-text-field v-model="titlePost" :rules="titlePostRules" :counter="10" label="Nombre de tu mascota" required></v-text-field>
-												</v-card-text>
+												<v-card-text class="title font-weight-light"></v-card-text>
 												<v-card-text>
 													<v-row>
 														<v-col cols="12" md="6">
@@ -43,14 +45,13 @@
 														<v-col cols="12" md="6">
 															<v-select :items="species" v-model="species" label="Especie" outlined></v-select>
 															<v-select :items="height" v-model="height" label="Tamaño" outlined></v-select>
-															<v-select :items="age" v-model="age" label="Edad" outlined></v-select>
 														</v-col>
 													</v-row>
 
 													<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
 													<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
 														<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
-														Muéstranos a tu peludo
+														Subir foto
 													</v-btn>
 													<v-card-text v-if="file">
 														<h4>Nombre del archivo: {{ file.name }}</h4>
@@ -254,7 +255,6 @@ export default {
 						id: res.id,
 						avatarUserPost: res.data().avatarUserPost,
 						userPost: res.data().userPost,
-						userMail: res.data().userMail,
 						titlePost: res.data().titlePost,
 						imgPost: res.data().imgPost,
 						messagePost: res.data().messagePost,
@@ -293,7 +293,6 @@ export default {
 						.add({
 							avatarUserPost: this.user.photo,
 							userPost: this.user.name,
-							userMail: this.user.email,
 							titlePost: this.titlePost,
 							messagePost: this.messagePost,
 							breed: this.breed,
