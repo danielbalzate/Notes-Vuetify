@@ -10,16 +10,16 @@
 				</v-list-item-content>
 			</v-list-item>
 			<p class="ma-5">
-				Recuerda ser específico y claro al momento de reportar un animal perdido, no podemos controlarlo todo, así que confiamos en ti para que subas contenido que realmente aporte a la
-				comunidad. Gracias por hacer del mundo un lugar más agradable.
+				Recuerda ser específico y claro al momento de reportar una mascota perdida, no podemos controlarlo todo, así que confiamos en ti para que subas contenido que realmente aporte a la
+				comunidad. ¡Gracias por hacer del mundo un lugar más agradable!
 			</p>
 
 			<v-card-text>
 				<v-row justify="center">
 					<v-dialog v-model="dialog" persistent max-width="800">
 						<template v-slot:activator="{on}">
-							<v-btn color="primary" x-large dark v-on="on">
-								Registrar
+							<v-btn color="primary" dark v-on="on" x-large>
+								Reportar
 								<br />
 								mascota perdida
 							</v-btn>
@@ -31,10 +31,9 @@
 										<v-flex xs-6>
 											<v-card flat class="transparent">
 												<v-card-title primary-title class="layout justify-center">
-													<div class="headline">Registrar mascota perdida</div>
+													<div class="headline">Registrar un post</div>
 												</v-card-title>
 
-												<v-card-text class="title font-weight-light"></v-card-text>
 												<v-card-text>
 													<v-row>
 														<v-col cols="12" md="6">
@@ -49,9 +48,11 @@
 													</v-row>
 
 													<input type="file" ref="btnUploadFile" class="d-none" @change="searchImg($event)" />
-													<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1">
+													<v-btn @click="$refs.btnUploadFile.click()" color="blue" class="white--text ma-1" x-large>
 														<v-icon dark right class="mr-3">fas fa-person-booth</v-icon>
-														Subir foto
+														Múestranos la
+														<br />
+														mascota perdida
 													</v-btn>
 													<v-card-text v-if="file">
 														<h4>Nombre del archivo: {{ file.name }}</h4>
@@ -64,13 +65,7 @@
 												</v-card-text>
 												<v-list class="transparent">
 													<v-list-item>
-														<v-textarea
-															outlined
-															v-model="messagePost"
-															name="input-7-4"
-															label="¡Has una breve descripción de la historia de tu peludo!"
-															value=""
-														></v-textarea>
+														<v-textarea outlined v-model="messagePost" name="input-7-4" label="¡Has una breve descripción de lo que paso!" value=""></v-textarea>
 													</v-list-item>
 													<v-btn outlined color="red" @click="dialog = false">Cancelar</v-btn>
 
@@ -88,13 +83,12 @@
 			</v-card-text>
 		</v-card>
 
-		<v-card max-width="250" class="ma-1" v-for="(post, index) in posts" :key="index">
+		<v-card max-width="250" class="ma-1" v-for="(post, index) in reportLostPet" :key="index">
 			<v-list-item>
 				<v-avatar class="mr-5">
 					<img :src="user.photo" />
 				</v-avatar>
 				<v-list-item-content>
-					<v-list-item-title class="subtitle-1">{{ post.titlePost }}</v-list-item-title>
 					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
@@ -131,8 +125,6 @@ export default {
 			/* Rules form */
 			valid: false,
 			isValid: true,
-			titlePostRules: [(v) => !!v || "Para continuar debe ingresar el nombre de tu mascota", (v) => v.length <= 10 || "No debe superar las 10 letras"],
-			titlePost: "",
 			messagePost: null,
 			breed: [
 				"Criollo",
@@ -216,62 +208,56 @@ export default {
 			weight: ["Menos de 10 Kg", "Entre 10 Kg y 20 Kg", "Entre 20 Kg y 40 Kg", "Mayor a 40 kg"],
 			height: ["Pequeño", "Mediano", "Grande", "Muy grande"],
 			gender: ["Macho", "Hembra"],
-			age: ["Entre 0 a 6 meses", "Entre 6 meses a 1 año", "Entre 1 a 5 años", "Entre 5 a 10 años", "Más de 10 años"],
 			dialog: false,
-			posts: []
+			reportLostPet: []
 		};
 	},
 	computed: {
 		...mapState(["user"])
-		// Creo que no lo voy a utilizar modular
-		// ...mapState("posts", ["posts"])
 	},
 	created() {
-		this.getPostGlobal();
+		this.reportLostPets();
 	},
 	mounted() {},
 	methods: {
 		clear() {
-			this.titlePost = "";
 			this.messagePost = "";
 		},
-		async getPostGlobal() {
+		async reportLostPets() {
 			try {
 				const resDB = await db
 					.collection("users")
 					.doc(this.user.uid)
-					.collection("posts")
+					.collection("lostPet")
 					.get();
 				resDB.forEach((res) => {
-					//console.log("TCL: getPostGlobal -> res", res.id);
-					// console.log("TCL: getPostGlobal -> res.data().registerDate", new Date(res.data().registerDate.seconds * 1000).toString());
-					// console.log("TCL: getPostGlobal -> hola", hola);
+					//console.log("TCL: reportLostPets -> res", res.id);
 					const registerDate = new Date(res.data().registerDate.seconds * 1000)
 						.toISOString()
 						.slice(-30, -8)
 						.replace("T", " ");
 
-					const postGlobal = {
+					const reportLostPets = {
 						id: res.id,
 						avatarUserPost: res.data().avatarUserPost,
 						userPost: res.data().userPost,
-						titlePost: res.data().titlePost,
+						userMail: res.data().userMail,
 						imgPost: res.data().imgPost,
 						messagePost: res.data().messagePost,
 						registerDate: registerDate
 					};
-					this.posts.push(postGlobal);
+					this.reportLostPet.push(reportLostPets);
 				});
 			} catch (error) {
-				console.log("TCL: getPostGlobal -> error", error);
+				console.log("TCL: reportLostPets -> error", error);
 			}
 		},
 		async addPost() {
 			try {
-				if (this.titlePost && this.messagePost && this.file && this.breed && this.species && this.weight && this.height && this.gender && this.age) {
+				if (this.messagePost && this.file && this.breed && this.species && this.weight && this.height && this.gender) {
 					/* Todo esto hace parte a la imagen */
 					Swal.fire({
-						title: "¡Estamos retocando la foto de tu peludo!",
+						title: "¡Estamos retocando la foto del animalito !",
 						onBeforeOpen: () => {
 							Swal.showLoading();
 						}
@@ -289,34 +275,32 @@ export default {
 					const resDB = await db
 						.collection("users")
 						.doc(this.user.uid)
-						.collection("posts")
+						.collection("lostPet")
 						.add({
 							avatarUserPost: this.user.photo,
 							userPost: this.user.name,
-							titlePost: this.titlePost,
+							userMail: this.user.email,
 							messagePost: this.messagePost,
 							breed: this.breed,
 							species: this.species,
 							weight: this.weight,
 							height: this.height,
 							gender: this.gender,
-							age: this.age,
 							imgPost: urlDownload,
 							registerDate: firebase.firestore.Timestamp.fromDate(new Date()),
 							userUid: this.user.uid
 						});
 					Swal.fire({
 						icon: "success",
-						title: "¡Has posteado correctamente!",
+						title: "¡Has reportado esta mascota correctamente!",
 						showConfirmButton: false,
 						timer: 1000
 					});
-					(this.posts = []), (this.dialog = false);
-					this.titlePost = "";
+					(this.reportLostPet = []), (this.dialog = false);
 					this.file = null;
 					// Creo que esto podría mejorarse con un Snapshot
 					this.messagePost = "";
-					this.getPostGlobal();
+					this.reportLostPets();
 				} else {
 					Swal.fire({
 						icon: "error",
@@ -326,7 +310,6 @@ export default {
 					this.dialog = true;
 				}
 			} catch (error) {
-				console.error("Oe");
 				console.log("TCL: addPost -> error", error);
 			}
 		},

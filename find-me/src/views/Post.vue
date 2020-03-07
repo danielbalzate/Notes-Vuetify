@@ -12,9 +12,11 @@
 				</v-chip>
 			</v-img>
 
-			<v-card-subtitle class="pb-0">{{ post.userPost }}
+			<v-card-subtitle class="pb-0">
+				{{ post.userPost }}
 				<v-spacer></v-spacer>
-				 Contacto: {{ post.userMail }}</v-card-subtitle>
+				Contacto: {{ post.userMail }}
+			</v-card-subtitle>
 			<v-card-subtitle class="pb-0"></v-card-subtitle>
 			<v-card-text class="text--primary">
 				<div>{{ post.messagePost }}</div>
