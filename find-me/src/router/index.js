@@ -12,6 +12,11 @@ const routes = [
 		meta: {requiresAuth: true}
 	},
 	{
+		path: "/",
+		name: "Inicio",
+		component: () => import(/* webpackChunkName: "about" */ "../views/Index.vue")
+	},
+	{
 		path: "/admin",
 		name: "Admin",
 		component: () => import(/* webpackChunkName: "about" */ "../views/Admin.vue"),
@@ -47,6 +52,11 @@ const routes = [
 		path: "/losts",
 		name: "Losts",
 		component: () => import(/* webpackChunkName: "about" */ "../views/Losts.vue")
+	},
+	{
+		path: "/reportLostPet",
+		name: "ReportLostPet",
+		component: () => import(/* webpackChunkName: "about" */ "../views/ReportLostPet.vue")
 	}
 ];
 

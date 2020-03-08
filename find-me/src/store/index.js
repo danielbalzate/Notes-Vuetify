@@ -79,16 +79,16 @@ export default new Vuex.Store({
 			}
 		},
 		editPost({commit}, post) {
-			const infoPost = Object.values(post);
+			// const infoPost = Object.values(post);
 			// console.log("TCL: editPost -> infoPost", infoPost);
 			// console.log("TCL: photoPost -> photoPost", infoPost[1]);
 			// console.log("TCL: editPost -> PostID", infoPost[7]);
 			// console.log("TCL: editPost -> PostID", infoPost[7]);
 
 			db.collection("users")
-				.doc(infoPost[11])
+				.doc(post.userUid)
 				.collection("posts")
-				.doc(infoPost[13])
+				.doc(post.id)
 				.update({
 					titlePost: post.titlePost,
 					messagePost: post.messagePost,
@@ -111,7 +111,7 @@ export default new Vuex.Store({
 				});
 		},
 		deletePost({commit}, post) {
-			const infoPost = Object.values(post);
+			// const infoPost = Object.values(post);
 			Swal.fire({
 				title: "¿Estás seguro que quieres eliminar este post?",
 				text: "Recuerda que si el perrito fue adopato cambiar el estado",
@@ -124,9 +124,9 @@ export default new Vuex.Store({
 			}).then((result) => {
 				if (result.value) {
 					db.collection("users")
-						.doc(infoPost[11])
+						.doc(post.userUid)
 						.collection("posts")
-						.doc(infoPost[13])
+						.doc(post.id)
 						.delete()
 						.then(() => {
 							Swal.fire({
