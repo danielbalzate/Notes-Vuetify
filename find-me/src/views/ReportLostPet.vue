@@ -257,7 +257,7 @@ export default {
 				if (this.messagePost && this.file && this.breed && this.species && this.weight && this.height && this.gender) {
 					/* Todo esto hace parte a la imagen */
 					Swal.fire({
-						title: "¡Estamos retocando la foto del animalito !",
+						title: "¡Estamos retocando la foto del animalito!",
 						onBeforeOpen: () => {
 							Swal.showLoading();
 						}
