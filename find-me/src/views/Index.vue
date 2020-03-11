@@ -25,8 +25,9 @@
 							</v-card-title>
 
 							<v-card-text class="text-center font-weight-light title">
-								Somos una comunidad donde cada campesino y citadino puede tener la capacidad de producir, procesar y/o comercializar productos orgánicos, o suplir sus necesidades
-								básicas generando así mercados agroecológicos autosostenible y amigables con el medio ambiente.
+								Somos un grupo de personas motivas por el bien común, queremos lo mejor para todos aquellos animales que son maltratados, abandonados o simplemente están perdidos. Es
+								una asociación sin animo de lugro, pero para mantener nuestros servidor activo necesitamos ciertos recursos. Si apoyas nuestra causa puedes donar desde 1$ hasta lo que
+								tu bolsillo y corazón te permita.
 							</v-card-text>
 						</v-card>
 					</v-col>
@@ -45,7 +46,7 @@
 						<div class="display-2 font-weight-bold">Nuestra misión</div>
 					</v-card-title>
 					<v-card-text class="text-center font-weight-light title">
-						Sabemos que los animales no pueden hablar, por ello necesitamos personas como tú que deseen compartir con personas que realmente quieran adoptar un animal, o encontrarlo.
+						Sabemos que los animales no pueden hablar, por ello necesitamos personas como tú que deseen compartir con personas que realmente quieran adoptar, encontrar o ayudar un animal.
 					</v-card-text>
 				</v-card>
 				<div class="d-flex">
@@ -53,17 +54,21 @@
 						<v-card-title primary-title class="layout justify-center">
 							<div class="display-1 font-weight-bold">Encuentra a tu peludo</div>
 						</v-card-title>
-						<v-parallax src="../assets/cultivo.jpeg" height="400">
-							<v-layout column align-center justify-center></v-layout>
-						</v-parallax>
+						<router-link :to="{name: 'Login'}">
+							<v-parallax src="../assets/dog-happy.jpg" height="400">
+								<v-layout column align-center justify-center></v-layout>
+							</v-parallax>
+						</router-link>
 					</v-col>
 					<v-col lg="6">
 						<v-card-title primary-title class="layout justify-center">
-							<div class="display-1 font-weight-bold">Tienda virtual</div>
+							<div class="display-1 font-weight-bold">Reportar animales perdidos</div>
 						</v-card-title>
-						<v-parallax src="../assets/frutas.jpeg" height="400">
-							<v-layout column align-center justify-center></v-layout>
-						</v-parallax>
+						<router-link :to="{name: 'LostGlobal'}">
+							<v-parallax src="../assets/dog.jpg" height="400">
+								<v-layout column align-center justify-center></v-layout>
+							</v-parallax>
+						</router-link>
 					</v-col>
 				</div>
 			</section>
@@ -150,7 +155,7 @@
 					<v-flex xs12>
 						<div class="white--text mr-4 text-right">
 							<v-spacer></v-spacer>
-							Developer ©2020 by Agroquipu
+							Developer ©2020 by jsdnlb
 						</div>
 					</v-flex>
 				</v-layout>

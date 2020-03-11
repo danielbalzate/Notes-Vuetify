@@ -30,33 +30,43 @@ const routes = [
 	},
 	{
 		path: "/login",
-		name: "Ingreso",
+		name: "Login",
 		component: () => import(/* webpackChunkName: "about" */ "../views/Login.vue")
 	},
 	{
 		path: "/post/:id",
 		name: "Post",
-		component: () => import(/* webpackChunkName: "about" */ "../views/Post.vue")
+		component: () => import(/* webpackChunkName: "about" */ "../views/Post.vue"),
+		meta: {requiresAuth: true}
 	},
 	{
 		path: "/postGlobal",
 		name: "PostGlobal",
-		component: () => import(/* webpackChunkName: "about" */ "../views/PostGlobal.vue")
+		component: () => import(/* webpackChunkName: "about" */ "../views/PostGlobal.vue"),
+		meta: {requiresAuth: true}
 	},
 	{
 		path: "/users",
 		name: "Users",
-		component: () => import(/* webpackChunkName: "about" */ "../views/Users.vue")
+		component: () => import(/* webpackChunkName: "about" */ "../views/Users.vue"),
+		meta: {requiresAuth: true}
 	},
 	{
 		path: "/losts",
 		name: "Losts",
-		component: () => import(/* webpackChunkName: "about" */ "../views/Losts.vue")
+		component: () => import(/* webpackChunkName: "about" */ "../views/Losts.vue"),
+		meta: {requiresAuth: true}
 	},
 	{
 		path: "/reportLostPet",
 		name: "ReportLostPet",
-		component: () => import(/* webpackChunkName: "about" */ "../views/ReportLostPet.vue")
+		component: () => import(/* webpackChunkName: "about" */ "../views/ReportLostPet.vue"),
+		meta: {requiresAuth: true}
+	},
+	{
+		path: "/lostGlobal",
+		name: "LostGlobal",
+		component: () => import(/* webpackChunkName: "about" */ "../views/LostGlobal.vue")
 	}
 ];
 
@@ -76,7 +86,7 @@ router.beforeEach((to, from, next) => {
 			next();
 		} else {
 			next({
-				name: "Ingreso"
+				name: "Inicio"
 			});
 		}
 	} else {

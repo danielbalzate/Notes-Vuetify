@@ -18,9 +18,11 @@
 		<v-navigation-drawer color="lime" v-model="drawer" src="../assets/space-wallpaper.jpg" app>
 			<v-layout column align-center mt-5>
 				<v-flex>
-					<v-avatar>
-						<img :src="user.photo" />
-					</v-avatar>
+					<router-link :to="{name: 'Admin'}">
+						<v-avatar>
+							<img :src="user.photo" />
+						</v-avatar>
+					</router-link>
 				</v-flex>
 				<v-flex>
 					<p class="mt-3 white--text">{{ user.name }}</p>
@@ -55,15 +57,13 @@ export default {
 				{title: "¡Adopta!", icon: "fas fa-paw", path: {name: "PostGlobal"}},
 				{title: "Usuarios", icon: "fas fa-users", path: {name: "Users"}},
 				{title: "Perdidos", icon: "fas fa-users", path: {name: "Losts"}},
-				{title: "Reportar", icon: "fas fa-users", path: {name: "ReportLostPet"}}
+				{title: "Reportar", icon: "fas fa-users", path: {name: "ReportLostPet"}},
+				{title: "Todos los perdidos", icon: "fas fa-users", path: {name: "LostGlobal"}}
 			]
 		};
 	},
 	methods: {
-		...mapActions(["logoutUser"]),
-		validar() {
-			alert("Hola");
-		}
+		...mapActions(["logoutUser"])
 	},
 	computed: {
 		...mapState(["user"])

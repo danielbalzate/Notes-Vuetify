@@ -1,21 +1,33 @@
 <template>
-	<v-timeline dense>
-		<v-timeline-item v-for="(lost, index) in losts" :key="index" large>
-			<template v-slot:icon>
-				<v-avatar>
+	<v-card class="d-flex flex-wrap" flat tile no-gutters>
+		<v-card max-width="250" class="ma-1" v-for="(lost, index) in losts" :key="index">
+			<v-list-item>
+				<v-avatar class="mr-5">
 					<img :src="lost.avatarUserPost" />
 				</v-avatar>
-			</template>
-			<v-card class="elevation-2">
-				<v-card-title class="headline">{{ lost.userPost }}</v-card-title>
-				<v-card-text>
-					{{ lost.messagePost }}
-				</v-card-text>
-			</v-card>
-		</v-timeline-item>
-	</v-timeline>
-</template>
+				<v-list-item-content>
+					<v-list-item-title class="subtitle-1">Ayúdame :(</v-list-item-title>
+					<v-list-item-subtitle>{{ lost.userPost }}</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
+			<router-link :to="{name: 'Post', params: {id: lost.id, userId: lost.userUid}}">
+				<v-img :src="lost.imgPost" height="194"></v-img>
+			</router-link>
+			<div align="center">
+				<v-btn small disabled class="pa-1 ma-1">
+					Vistas:
+				</v-btn>
+				<v-chip class="pa-2 ma-2" color="indigo darken-3" small outlined>
+					{{ lost.registerDate }}
+					<v-icon x-small class="ml-1">fas fa-calendar-day</v-icon>
+				</v-chip>
 
+				<v-icon color="red">fas fa-heart</v-icon>
+			</div>
+			<v-card-text>{{ lost.messagePost.substring(0, 120) }}...</v-card-text>
+		</v-card>
+	</v-card>
+</template>
 <script>
 import {db} from "@/firebase";
 import {mapState} from "vuex";
