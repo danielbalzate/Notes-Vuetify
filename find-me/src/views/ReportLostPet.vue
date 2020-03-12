@@ -89,6 +89,8 @@
 					<img :src="user.photo" />
 				</v-avatar>
 				<v-list-item-content>
+					<v-list-item-title class="subtitle-1">Ayúdame :(</v-list-item-title>
+
 					<v-list-item-subtitle>{{ user.name }}</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
