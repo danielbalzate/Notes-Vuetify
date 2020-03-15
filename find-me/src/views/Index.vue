@@ -179,8 +179,8 @@ export default {
 		name: "",
 		phone: "",
 		email: "",
-		items: ["Nuestros aprendices en agroecología", "Compradores de productos agroecológicos", "Vendedores de productos agroecológicos"],
-		pleasures: ["Nuestros aprendices en agroecología", "Compradores de productos agroecológicos", "Vendedores de productos agroecológicos"],
+		items: ["Adoptar una mascota", "Reportar perdida una mascota", "Dar en adopción una mascota"],
+		pleasures: ["Adoptar una mascota", "Reportar perdida una mascota", "Dar en adopción una mascota"],
 		comments: null,
 		info: []
 	}),
@@ -194,7 +194,7 @@ export default {
 			this.name = "";
 			this.phone = "";
 			this.email = "";
-			this.pleasures = ["Nuestros aprendices en agroecología"];
+			this.pleasures = ["Adoptar una mascota"];
 			this.comments = "";
 		},
 		async addInfo() {
@@ -216,7 +216,7 @@ export default {
 					this.name = null;
 					this.phone = null;
 					this.email = null;
-					this.pleasures = ["Nuestros aprendices en agroecología", "Compradores de productos agroecológicos", "Vendedores de productos agroecológicos"];
+					this.pleasures = ["Adoptar una mascota", "Reportar perdida una mascota", "Dar en adopción una mascota"];
 					this.comments = null;
 				} else {
 					Swal.fire({
