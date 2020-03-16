@@ -28,4 +28,3 @@ database.rules.json
 firestore.rules
 firestore.indexes.json
 storage.rules
-package-lock.json
